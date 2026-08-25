@@ -1,8 +1,10 @@
-import { View, Text, Pressable } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
+import { Pressable, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useRouter } from "expo-router";
 
 export default function Home() {
+  const router = useRouter();
   return (
     <SafeAreaView className="flex-1 bg-[#F7F7F5]">
       <View className="flex-1 px-6">
@@ -34,7 +36,7 @@ export default function Home() {
 
         {/* Button */}
         <View className="pb-12">
-          <Pressable className="h-12 items-center justify-center rounded-full bg-[#000000]">
+          <Pressable onPress={()=>router.push("/chat")} className="h-12 items-center justify-center rounded-full bg-[#000000]">
             <Text className="text-sm font-medium text-white">
               Get started
             </Text>
