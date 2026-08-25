@@ -1,5 +1,8 @@
 import { useState } from "react";
-import { View, Text, Pressable, TextInput, FlatList, SafeAreaView } from "react-native";
+import { View, Text, Pressable, TextInput, FlatList } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Ionicons } from "@expo/vector-icons";
+import AppHeader from "../components/AppHeader";
 
 type Task = {
   id: string;
@@ -53,19 +56,22 @@ export default function Todo() {
 
   return (
     <SafeAreaView className="flex-1 bg-white">
-      {/* Header */}
-      <View className="flex-row items-center justify-between px-5 pt-4 pb-3">
-        <Text className="text-xl font-semibold text-neutral-900">Tasks</Text>
-        <Pressable
-          onPress={addTask}
-          className="w-8 h-8 rounded-full bg-neutral-900 items-center justify-center active:opacity-80"
-        >
-          <Text className="text-white text-base">+</Text>
-        </Pressable>
-      </View>
-
+      {/* App Header with drawer toggle and back button */}
+      <AppHeader
+        title="Tasks"
+        showBack={false}
+        rightElement={
+          <Pressable
+            onPress={addTask}
+            className="w-9 h-9 rounded-full bg-neutral-900 items-center justify-center active:opacity-80"
+          >
+            <Ionicons name="add" size={20} color="white" />
+          </Pressable>
+        }
+      />
+      
       {/* Filter tabs */}
-      <View className="flex-row gap-2 px-5 pb-4">
+      <View className="flex-row gap-2 px-5 pb-3 pt-1">
         {filters.map((f) => (
           <Pressable
             key={f}
@@ -86,8 +92,9 @@ export default function Todo() {
       </View>
 
       {/* Sync note */}
-      <View className="mx-5 mb-3 bg-green-50 rounded-xl px-3 py-2">
-        <Text className="text-[11px] text-green-800">
+      <View className="mx-5 mb-3 bg-green-50 rounded-xl px-3 py-2 flex-row items-center gap-1.5">
+        <Ionicons name="sparkles" size={14} color="#15803d" />
+        <Text className="text-[11px] text-green-800 font-medium">
           Synced from Chat · added by NeuroPocket
         </Text>
       </View>
@@ -100,13 +107,15 @@ export default function Todo() {
         renderItem={({ item }) => (
           <Pressable
             onPress={() => toggleTask(item.id)}
-            className="flex-row items-center gap-3 bg-neutral-50 rounded-xl px-3.5 py-3.5"
+            className="flex-row items-center gap-3 bg-neutral-50 rounded-xl px-3.5 py-3.5 border border-neutral-100"
           >
             <View
-              className={`w-[18px] h-[18px] rounded-md ${
+              className={`w-[18px] h-[18px] rounded-md items-center justify-center ${
                 item.done ? "bg-green-700" : "border-[1.5px] border-neutral-300"
               }`}
-            />
+            >
+              {item.done && <Ionicons name="checkmark" size={12} color="white" />}
+            </View>
             <Text
               className={`flex-1 text-[13px] ${
                 item.done ? "text-neutral-400 line-through" : "text-neutral-900"
@@ -136,7 +145,9 @@ export default function Todo() {
         <Pressable
           onPress={addTask}
           className="w-10 h-10 rounded-full bg-neutral-900 items-center justify-center active:opacity-80"
-        />
+        >
+          <Ionicons name="arrow-up" size={18} color="white" />
+        </Pressable>
       </View>
     </SafeAreaView>
   );

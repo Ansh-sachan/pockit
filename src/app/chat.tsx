@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
+import AppHeader from "../components/AppHeader";
 
 type Message = {
   id: string;
@@ -72,7 +73,7 @@ export default function Chat() {
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        text: "…",
+        text: "I am running locally on your device with zero internet connection.",
       };
       setMessages((prev) => [...prev, aiMessage]);
     }, 400);
@@ -80,27 +81,18 @@ export default function Chat() {
 
   return (
     <SafeAreaView className="flex-1 bg-white">
-      {/* Header */}
-      <View className="flex-row items-center justify-between px-5 py-3 border-b border-neutral-100">
-        <View className="flex-row items-center gap-2">
-        <Pressable>
-            <Ionicons 
-                name="arrow-back"
-                size={20}
-                color="#000000"
-            />
-        </Pressable>
-        <Text className="text-[15px] font-medium text-neutral-900">
-          NeuroPocket
-        </Text>
-        </View>
-
-        <View className="bg-green-50 rounded-full px-2.5 py-1">
-          <Text className="text-[11px] text-green-800">
-            Llama 3.2 1B · offline
-          </Text>
-        </View>
-      </View>
+      {/* App Header with sidebar drawer access and status */}
+      <AppHeader
+        title="AI Chat"
+        showBack={false}
+        rightElement={
+          <View className="bg-green-50 rounded-full px-2.5 py-1">
+            <Text className="text-[11px] font-medium text-green-800">
+              Llama 3.2 1B · offline
+            </Text>
+          </View>
+        }
+      />
 
       {/* Messages */}
       <KeyboardAvoidingView
@@ -124,6 +116,7 @@ export default function Chat() {
           <TextInput
             value={input}
             onChangeText={setInput}
+            onSubmitEditing={handleSend}
             placeholder="Ask something…"
             placeholderTextColor="#9ca3af"
             className="flex-1 bg-neutral-100 rounded-full px-4 py-2.5 text-[13px] text-neutral-900"
