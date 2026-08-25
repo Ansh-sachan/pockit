@@ -36,7 +36,7 @@ export default function Home() {
 
         {/* Button */}
         <View className="pb-12">
-          <Pressable onPress={()=>router.push("/chat")} className="h-12 items-center justify-center rounded-full bg-[#000000]">
+          <Pressable onPress={()=>router.push("/todo")} className="h-12 items-center justify-center rounded-full bg-[#000000]">
             <Text className="text-sm font-medium text-white">
               Get started
             </Text>
